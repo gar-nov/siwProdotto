@@ -1,0 +1,239 @@
+/* ========== Impostazioni base ========== */
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  height: 100%;
+  font-family: Arial, sans-serif;
+}
+
+/* ========== Layout principale verticale ========== */
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ========== Navbar ========== */
+.navbar {
+  background-color: rgb(0, 0, 0);
+  padding: 15px 30px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.navbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo img {
+  height: 50px;
+}
+
+.navbar-right {
+  display: flex;
+  gap: 15px;
+}
+
+.navbar-link {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 1px solid #fff;       /* bordo bianco */
+  border-radius: 6px;
+  text-decoration: none;
+  color: white;                 /* testo bianco */
+  background-color: black;      /* sfondo nero */
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.navbar-link:hover {
+  background-color: #333;       /* hover grigio scuro */
+  color: white;
+}
+
+
+
+/* ========== Sezione immagini (UP SIDE) ========== */
+.up-side {
+  display: flex;
+  width: 100%;
+  height: 400px;
+  margin: 0;
+  padding: 0;
+}
+
+.image-row {
+  display: flex;
+  flex: 1;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.image-row > div {
+  flex: 1;
+}
+
+.image-row img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 0;
+}
+/******************MIDDLE PART*****************/
+.middle-part {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  margin: 40px 0 20px;
+ 
+}
+
+.title-wrapper {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.collection-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+   border-bottom: 1px solid #e0e0e0;
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  flex: 1;
+}
+
+.see-all {
+  background-color: black;
+  color: white;
+  padding: 12px 24px;
+  text-decoration: none;
+  border-radius: 30px;
+  font-size: 18px;
+  transition: background-color 0.3s ease;
+}
+
+/* ========== Sezione prodotti (DOWN SIDE) ========== */
+.down-side {
+  padding: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.card-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 250px);
+  gap: 1.2rem;
+  justify-content: center;
+  width: 100%;
+}
+
+.product-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgb(247, 247, 247);
+  border-radius: 20px;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease, outline-color 0.2s ease, outline-offset 0.2s ease;
+}
+
+.product-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  outline: 1px solid var(--color2);
+  outline-offset: 3px;
+}
+
+.product-image-box {
+  width: 100%;
+  max-height: 300px;
+  overflow: hidden;
+  border-radius: 15px;
+  margin-bottom: 0.8rem;
+}
+
+.product-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 15px;
+  display: block;
+}
+
+.product-info h3 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0.3em 0;
+  color: var(--color2);
+}
+
+.product-info p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--color1);
+}
+
+/**********CATEGORY BOX****************/
+.category-box {
+  display: flex;
+  justify-content: center;   /* centrate al centro */
+  gap: 15px;                 /* spazio tra i bottoni */
+  flex-wrap: wrap;           /* se sono tante vanno a capo */
+  margin: 20px 0;
+}
+
+.category-box a {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.category-box a:hover {
+  background-color: black;
+  color: white;
+}
+
+
+
+/****** FOOTER PART ************/
+
+
+.foot {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background-color: rgb(0, 0, 0);
+  color: white; /* colore testo bianco */
+}
+
+
+

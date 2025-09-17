@@ -31,8 +31,6 @@ public class User {
 	    private Credentials credentials;
 
 
-	    @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
-	    private List<Prodotto> prodotti;
 
 	    // Getters e Setters
 	    public Long getId() {
@@ -67,13 +65,6 @@ public class User {
 	        this.credentials = credentials;
 	    }
 
-	    public List<Prodotto> getProdotti() {
-	        return prodotti;
-	    }
-
-	    public void setProdotti(List<Prodotto> prodotti) {
-	        this.prodotti = prodotti;
-	    }
-	    
+	 
 	 
 }

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lista degli Animali</title>
+    <link rel="stylesheet" href="/css/stile.css">
+</head>
+
+<body class="product-page">
+<header class="navbar">
+  <div class="navbar-content">
+    <!-- Logo a sinistra -->
+    <div class="logo">
+        <a href="/">
+                <img src="/images/logo.png" alt="Logo">
+            </a>
+    </div>
+    <div class="navbar-right" sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
+      <button class="navbar-link" onclick="window.location.href='/prodotto/form'">
+                                Aggiungi prodotto
+                  </button>
+    
+    </div>
+  </div>
+</header>
+         <div class="middle-part">
+              <div class="left-placeholder"></div>
+
+           <div class="title-wrapper">
+               <h2 class="collection-title">Orologi</h2>
+           </div>
+           <div class="button-wrapper"></div>
+        </div>              
+        
+     <div class="content-flex">
+<!--  Box Categorie -->
+     <div class="category-box">
+  <a th:href="@{/prodotti}">Tutti</a>
+  <a th:each="categoria : ${categorie}"
+     th:href="@{'/categoria/' + ${categoria.id}}"
+     th:text="${categoria.nome}">Categoria</a>
+</div>
+
+</div>
+       <div class="grid-container">
+		    
+
+	<!-- Card per ogni animale -->
+	  <div class="card-wrapper">
+    <div class="product-card" th:each="prodotto : ${prodotti}">
+
+      <!-- Immagine -->
+      <div class="product-image-box">
+        <img th:if="${prodotto.foto != null}" class="product-image"
+             th:src="@{'/images/prodotti-foto/' + ${prodotto.id} + '/' + ${prodotto.foto}}"
+             alt="Foto prodotto" />
+        <div th:unless="${prodotto.foto != null}" class="product-image flex center">
+          Nessuna foto disponibile
+        </div>
+      </div>
+
+      <!-- Nome, prezzo, descrizione -->
+      <div class="product-info">
+        <h3 th:text="${prodotto.nome}">Nome prodotto</h3>
+        <p th:text="'Prezzo: € ' + ${prodotto.prezzo}">Prezzo</p>
+        
+      </div>
+
+    </div>
+  </div>
+</div>
+</div>
+    </div>
+</body>
+
+</html>

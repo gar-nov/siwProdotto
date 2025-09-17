@@ -44,10 +44,7 @@ public class Prodotto {
 	    @JoinColumn(name = "categoria_id")
 	    private Categoria categoria;
 
-	    @ManyToOne
-		@JoinColumn(name = "user_id", nullable = false)
-		@NotNull
-	    private User user;  
+	     
 	    
 	    // GETTER & SETTER
 	    public Long getId() {
@@ -101,13 +98,8 @@ public class Prodotto {
 	        this.categoria = categoria;
 	    }
 
-	    public User getUser() {
-	        return user;
-	    }
-
-	    public void setUser(User user) {
-	        this.user = user;
-	    }
+	   
+	   
 	    
 	 
 

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width">
+    <meta charset="utf-8">
+    <title>AdoptMe</title>
+  
+     <link rel="stylesheet" href="/css/stile.css"> 
+  </head>
+  
+  <body class="index-page">
+
+	  <p sec:authorize="isAuthenticated()">
+    Utente autenticato: <span sec:authentication="principal.username">Nessun utente autenticato</span>
+</p>
+<p sec:authorize="isAuthenticated()">
+    Ruoli utente: <span sec:authentication="principal.authorities">Nessun ruolo trovato</span>
+</p>
+
+<p sec:authorize="isAnonymous()">
+    Nessun utente autenticato.
+</p>
+
+<header class="navbar">
+  <div class="navbar-content">
+    <!-- Logo a sinistra -->
+    <div class="logo">
+        <a href="/">
+                <img src="/images/logo.png" alt="Logo">
+            </a>
+    </div>
+
+    <!-- Sezione destra con Accedi e altro elemento -->
+    <div class="navbar-right" sec:authorize="isAnonymous()">
+      <a href="/login" class="navbar-link">Accedi</a>
+      <a href="/register" class="navbar-link">Registrati</a>
+    </div>
+  </div>
+</header>
+
+
+<div class="container">
+	
+	  <div class="up-side">
+    
+   <div class="up-side">
+  <div class="image-row">
+    <div><img src="/images/foto1.jpg" alt="Image 1"></div>
+    <div><img src="/images/foto2.png" alt="Image 2"></div>
+    <div><img src="/images/foto3.jpg" alt="Image 3"></div>
+    <div><img src="/images/foto4.jpg" alt="Image 4"></div>
+  </div>
+</div>
+
+    
+  
+ 
+  </div>
+  <!-- fine div up side -->
+<div class="middle-part">
+  <div class="left-placeholder"></div>
+
+  <div class="title-wrapper">
+    <h2 class="collection-title">La nostra collezione</h2>
+  </div>
+
+  <div class="button-wrapper">
+    <a href="/prodotti" class="see-all">Visualizza tutti</a>
+  </div>
+</div>
+
+
+
+
+
+
+
+  <div class="down-side">
+  <div class="card-wrapper">
+    <div class="product-card" th:each="prodotto : ${prodotti}">
+
+      <!-- Immagine -->
+      <div class="product-image-box">
+        <img th:if="${prodotto.foto != null}" class="product-image"
+             th:src="@{'/images/prodotti-foto/' + ${prodotto.id} + '/' + ${prodotto.foto}}"
+             alt="Foto prodotto" />
+        <div th:unless="${prodotto.foto != null}" class="product-image flex center">
+          Nessuna foto disponibile
+        </div>
+      </div>
+
+      <!-- Nome, prezzo, descrizione -->
+      <div class="product-info">
+        <h3 th:text="${prodotto.nome}">Nome prodotto</h3>
+        <p th:text="'Prezzo: € ' + ${prodotto.prezzo}">Prezzo</p>
+        
+      </div>
+
+    </div>
+  </div>
+</div>
+
+  
+
+ </div>
+
+ <!-- fine div left side -->
+ 
+
+ </div>
+
+    
+    
+    
+    <div th:insert="~{fragments/base.html :: footer}"></div>
+  
+
+
+  </body>
+</html>

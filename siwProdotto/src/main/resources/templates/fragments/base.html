@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	
+<head th:fragment="header(title)">
+
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width">
+	<link th:href="@{/css/stile.css}" rel="stylesheet">
+	<title th:text="${title}"></title>
+
+</head>
+
+<body>
+	
+	
+	<!---footer di ogni pagina-->
+	<div class="footer-wrapper" th:fragment="footer">
+		<div class="foot">
+			<div> © 2025 | AdoptMe | owned by: KMCG </div>
+		</div>
+	</div>
+	
+	<div class="footer-wrapper" th:fragment="footerAdmin">
+		<div class="foot">
+			<div> © 2025 | AdoptMe | Admin Dashboard </div>
+		</div>
+	</div>
+	
+	
+</body>
+
+</html>
