@@ -76,8 +76,9 @@
 
 
   <div class="down-side">
-  <div class="card-wrapper">
-    <div class="product-card" th:each="prodotto : ${prodotti}">
+   <div class="card-wrapper" th:if="${prodotti}">
+  <a class="product-card-link" th:each="prodotto : ${prodotti}" th:href="@{'/prodotto/' + ${prodotto.id}}">
+    <div class="product-card">
 
       <!-- Immagine -->
       <div class="product-image-box">
@@ -93,11 +94,13 @@
       <div class="product-info">
         <h3 th:text="${prodotto.nome}">Nome prodotto</h3>
         <p th:text="'Prezzo: € ' + ${prodotto.prezzo}">Prezzo</p>
-        
+
       </div>
 
     </div>
-  </div>
+  </a>
+</div>
+
 </div>
 
   

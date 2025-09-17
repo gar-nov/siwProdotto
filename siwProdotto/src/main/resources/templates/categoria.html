@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Orologi da polso</title>
+    <title>Lista degli Animali</title>
     <link rel="stylesheet" href="/css/stile.css">
 </head>
 
@@ -16,38 +16,31 @@
                 <img src="/images/logo.png" alt="Logo">
             </a>
     </div>
-    <div class="navbar-right" sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
+        <div class="navbar-right" sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
       <button class="navbar-link" onclick="window.location.href='/prodotto/form'">
-                                Aggiungi prodotto
+                               Elimina categoria
                   </button>
     
     </div>
+   
   </div>
 </header>
          <div class="middle-part">
               <div class="left-placeholder"></div>
 
            <div class="title-wrapper">
-               <h2 class="collection-title">Orologi</h2>
+               
+               <div class="collection-title" th:text="${categoria.nome}">Nome categoria:</div>
            </div>
            <div class="button-wrapper"></div>
         </div>              
         
-     <div class="content-flex">
-<!--  Box Categorie -->
-     <div class="category-box">
-  <a th:href="@{/prodotti}">Tutti</a>
-  <a th:each="categoria : ${categorie}"
-     th:href="@{'/categoria/' + ${categoria.id}}"
-     th:text="${categoria.nome}">Categoria</a>
-</div>
-
-</div>
+   
        <div class="grid-container">
 		    
 
 	<!-- Card per ogni animale -->
-	   <div class="card-wrapper" th:if="${prodotti}">
+	 <div class="card-wrapper" th:if="${prodotti}">
   <a class="product-card-link" th:each="prodotto : ${prodotti}" th:href="@{'/prodotto/' + ${prodotto.id}}">
     <div class="product-card">
 
@@ -71,6 +64,11 @@
     </div>
   </a>
 </div>
+
+  <!-- Se la categoria non esiste -->
+        <div th:unless="${categoria}">
+            <p>Questa categoria non esiste!</p>
+        </div>
 
 </div>
 </div>

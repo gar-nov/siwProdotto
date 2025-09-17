@@ -24,4 +24,10 @@ public class CategoriaService {
 
 		return categorie;
 	}
+	
+	//gestione visualizzazione categoriA
+	
+		public Categoria findById(Long id) {
+			return categoriaRepository.findById(id).get();
+		}
 }
