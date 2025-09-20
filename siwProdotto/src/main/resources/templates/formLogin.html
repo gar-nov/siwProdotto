@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Area</title>
+    <link rel="stylesheet" href="/css/stile.css"> 
+</head>
+
+
+<body class="login-page">
+
+    <!-- HEADER -->
+    <header class="navbar">
+        <div class="navbar-content">
+            <div class="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="Logo Adopt Me">
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!--  CONTENITORE che occupa tutto lo spazio e centra il form -->
+              <div class="page-wrapper">
+                 <div class="prodotto-container">
+                   
+                    <form th:action="@{/login}" method="POST">
+                        <table>
+							<div class="flex title">Accedi al tuo account</div>
+                            <tr>
+                                <td>username:</td>
+                                <td><input name="username" type="text" required /></td>
+                            </tr>
+                            <tr>
+                                <td>password:</td>
+                                <td><input name="password" type="password" required /></td>
+                            </tr>
+                        </table>
+                        <div class="pulsante">
+                            <button class="navbar-link" type="submit">entra</button>
+                        </div>
+                        <div class="create-account">
+                            <h3><span>non hai un'account?</span></h3>
+                            <a class="navbar-link" th:href="@{/register}">registrati</a>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+          
+    
+          
+
+    <!-- FOOTER -->
+    <div th:insert="~{fragments/base.html :: footer}"></div>
+
+</body>
+</html>

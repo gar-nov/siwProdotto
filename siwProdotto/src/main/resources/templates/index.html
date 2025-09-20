@@ -31,9 +31,14 @@
     </div>
 
     <!-- Sezione destra con Accedi e altro elemento -->
-    <div class="navbar-right" sec:authorize="isAnonymous()">
+    <div class="navbar-right">
+   <p sec:authorize="isAnonymous()">
       <a href="/login" class="navbar-link">Accedi</a>
       <a href="/register" class="navbar-link">Registrati</a>
+    </p>
+       <p sec:authorize="isAuthenticated()">
+      <a href="/logout" class="navbar-link">Log out</a>
+     </p>      
     </div>
   </div>
 </header>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register Area</title>
+    <link rel="stylesheet" href="/css/stile.css"> 
+</head>
+
+<body class="register-page">
+
+<!-- HEADER -->
+<header class="navbar">
+  <div class="navbar-content">
+    <div class="logo">
+       <a href="/">
+          <img src="/images/logo.png" alt="Logo Adopt Me">
+       </a>
+    </div>  
+  </div>
+</header>
+
+<!-- CONTENITORE CENTRALE -->
+  <div class="page-wrapper">
+    <div class="prodotto-container">
+      
+
+     <form th:action="@{/register}" method="POST" th:object="${credentials}">
+   <table>
+	   <div class="flex title">Crea un nuovo account</div>
+    <tr>
+      <td>username</td>
+      <td><input type="text" th:field="*{username}" placeholder="username" /></td>
+      <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color:red"></td>
+    </tr>
+    <tr>
+      <td>password</td>
+      <td><input type="password" th:field="*{password}" placeholder="password" /></td>
+      <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color:red"></td>
+    </tr>
+    <tr th:object="${user}">
+      <td>nome</td>
+      <td><input type="text" th:field="*{nome}" placeholder="nome" /></td>
+      <td th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" style="color:red"></td>
+    </tr>
+    <tr th:object="${user}">
+      <td>cognome</td>
+      <td><input type="text" th:field="*{cognome}" placeholder="cognome" /></td>
+      <td th:if="${#fields.hasErrors('cognome')}" th:errors="*{cognome}" style="color:red"></td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <button class="button" type="submit">Crea il tuo account</button>
+      </td>
+    </tr>
+  </table>
+</form>
+
+
+    </div>
+ </div>
+
+<!-- FOOTER -->
+<div th:insert="~{fragments/base.html :: footer}"></div>
+
+</body>
+</html>
+

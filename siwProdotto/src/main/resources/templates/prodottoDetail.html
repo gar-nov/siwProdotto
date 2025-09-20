@@ -21,7 +21,7 @@
  </header>
    <!-- DETTAGLIO PRODOTTO -->
     <div class="flex-column center" th:if="${prodotto}">
-        <div class="animal-container">
+        <div class="prodotto-container">
             <!-- Immagine prodotto -->
             <div>
                 <div th:if="${prodotto.foto}">
@@ -50,11 +50,20 @@
                 <div class="title2" th:text="${prodotto.descrizione}">Descrizione del prodotto</div>
 
                 <!-- Pulsanti modifica/cancella -->
+                 <div class="navbar-right" sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
+    <button class="navbar-link"
+            th:onclick="'window.location.href=\'/prodotto/edit/form/' + '[[${prodotto.id}]]\''">
+        Modifica
+    </button>
+
+    <button class="navbar-link"
+            th:onclick="'window.location.href=\'/prodotto/delete/confirm/' + '[[${prodotto.id}]]\''">
+        Cancella
+    </button>
+</div>
+
                
-                    <div>
-                        <a th:href="@{'/prodotto/edit/form/' + ${prodotto.id}}">modifica</a>
-                    </div>
-                    <a th:href="@{'/prodotto/delete/confirm/' + ${prodotto.id}}">cancella</a>
+                    
                 </div>
             </div>
         </div>
