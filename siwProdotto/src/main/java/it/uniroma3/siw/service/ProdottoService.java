@@ -39,4 +39,9 @@ public class ProdottoService {
 
 		return animali;
 	}
+	
+	public Prodotto findById(Long id) {
+	    return prodottoRepository.findById(id).get();
+	}
+
 }

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Orologi da polso</title>
+    <link rel="stylesheet" href="/css/stile.css">
+</head>
+
+<body class="prodotto-detail-page">
+
+<header class="navbar">
+  <div class="navbar-content">
+    <!-- Logo a sinistra -->
+    <div class="logo">
+        <a href="/">
+                <img src="/images/logo.png" alt="Logo">
+            </a>
+    </div>
+  </div>
+ </header>
+   <!-- DETTAGLIO PRODOTTO -->
+    <div class="flex-column center" th:if="${prodotto}">
+        <div class="animal-container">
+            <!-- Immagine prodotto -->
+            <div>
+                <div th:if="${prodotto.foto}">
+                    <img class="prodotto-image-bigger"
+                          th:src="@{'/images/prodotti/' + ${prodotto.id} + '/' + ${prodotto.foto}}" />
+                </div>
+                <div th:unless="${prodotto.foto}">
+                    <div class="prodotto-image-bigger flex center">Nessuna foto disponibile</div>
+                </div>
+            </div>
+
+            <!-- Info prodotto -->
+            <div class="prodotto-info">
+                <div class="title" th:text="${prodotto.nome}">Nome Prodotto</div>
+
+                <div class="title2">
+                    Prezzo: <span th:text="${prodotto.prezzo}">0.00</span> €
+                </div>
+
+                <div class="title2">
+                    Categoria: 
+                    <a th:href="@{'/categoria/' + ${prodotto.categoria.id}}"
+                       th:text="${prodotto.categoria.nome}">Categoria</a>
+                </div>
+
+                <div class="title2" th:text="${prodotto.descrizione}">Descrizione del prodotto</div>
+
+                <!-- Pulsanti modifica/cancella -->
+               
+                    <div>
+                        <a th:href="@{'/prodotto/edit/form/' + ${prodotto.id}}">modifica</a>
+                    </div>
+                    <a th:href="@{'/prodotto/delete/confirm/' + ${prodotto.id}}">cancella</a>
+                </div>
+            </div>
+        </div>
+    
+
+    <div th:unless="${prodotto}">
+        Questo prodotto non esiste!
+    </div>
+<div class="middle-part">
+  <div class="left-placeholder"></div>
+
+  <div class="title-wrapper">
+    <h2 class="collection-title">Commenti</h2>
+    <div class="commenti-wrapper">
+            <div class="commento" th:each="commento : ${commenti}">
+                <p><strong th:text="${commento.autore.username}">Autore</strong>:</p>
+                <p th:text="${commento.testo}">Testo del commento</p>
+            </div>
+        </div>
+  </div>
+
+  <div class="button-wrapper">
+    <a href="/prodotti" class="see-all">Visualizza tutti</a>
+  </div>
+</div>
+
+
+
+<div class="down-side">
+	 <div class="title-wrapper">
+	     <h2 class="collection-title">Prodotti simili</h2>
+    </div>
+
+  <!-- Se NON ci sono prodotti simili -->
+  <p th:if="${#lists.isEmpty(prodotto.prodottiSimili)}" class="empty-message">
+    Nessun prodotto simile disponibile
+  </p>
+
+  <!-- Se ci sono prodotti simili -->
+  <div class="card-wrapper" th:unless="${#lists.isEmpty(prodotto.prodottiSimili)}">
+    <a class="product-card-link" th:each="simile : ${prodotto.prodottiSimili}" 
+       th:href="@{'/prodotto/' + ${simile.id}}">
+      <div class="product-card">
+
+        <!-- Immagine -->
+        <div class="product-image-box">
+          <img th:if="${simile.foto != null}" class="product-image"
+               th:src="@{'/images/prodotti-foto/' + ${simile.id} + '/' + ${simile.foto}}"
+               alt="Foto prodotto simile" />
+          <div th:unless="${simile.foto != null}" class="product-image flex center">
+            Nessuna foto disponibile
+          </div>
+        </div>
+
+        <!-- Nome, prezzo -->
+        <div class="product-info">
+          <h3 th:text="${simile.nome}">Nome prodotto</h3>
+          <p th:text="'Prezzo: € ' + ${simile.prezzo}">Prezzo</p>
+        </div>
+
+      </div>
+    </a>
+  </div>
+
+</div>
+
+    
+  
+</body>
+
+</html>

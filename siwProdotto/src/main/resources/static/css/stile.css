@@ -230,6 +230,149 @@ body {
   background-color: black;
   color: white;
 }
+/*********PRODOTTODETAIL****************/
+/* ========== DETTAGLIO PRODOTTO ========== */
+.empty-message {
+  margin-top: 70px;
+  font-size: 16px;
+  color: #555;
+  text-align: center;
+}
+
+/* Sfondo chiaro solo per la pagina dettaglio prodotto */
+body.prodotto-detail-page {
+  background-color: #f7f7f7; /* o #ffffff */
+}
+
+
+.animal-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  margin: 40px auto;
+  padding: 20px;
+  max-width: 1100px;
+  background-color: #f9f9f9;
+  border-radius: 20px;
+}
+
+/* Immagine grande del prodotto */
+.prodotto-image-bigger {
+  width: 300px;
+  height: auto;
+  border-radius: 20px;
+  object-fit: cover;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Box info a destra */
+.prodotto-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 500px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #111;
+}
+
+.title2 {
+  font-size: 18px;
+  color: #333;
+}
+
+
+/* ========== COMMENTI ========== */
+.commenti-section {
+  margin: 60px auto 30px auto;
+  max-width: 900px;
+  padding: 20px;
+  background-color: #e9f1fb;
+  border-radius: 20px;
+}
+
+.commenti-section h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 22px;
+}
+
+.commenti-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.commento {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 5px;
+}
+
+.commento p {
+  margin: 5px 0;
+  color: #222;
+}
+
+
+/* ========== PRODOTTI SIMILI ========== */
+.prodotti-simili-section {
+  margin: 60px auto;
+  max-width: 1000px;
+  padding: 20px;
+  background-color: #fef6e4;
+  border-radius: 20px;
+}
+
+.prodotti-simili-section h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 22px;
+}
+
+.prodotti-simili-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+.prodotto-simile {
+  width: 180px;
+  text-align: center;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  transition: transform 0.2s ease;
+  box-shadow: 0 2px 5px;
+}
+
+.prodotto-simile:hover {
+  transform: scale(1.05);
+}
+
+.prodotto-simile img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.prodotto-simile p {
+  font-size: 16px;
+  font-weight: 500;
+ 
+}
+
 
 
 

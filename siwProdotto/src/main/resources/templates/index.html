@@ -75,32 +75,31 @@
 
 
 
-  <div class="down-side">
-   <div class="card-wrapper" th:if="${prodotti}">
-  <a class="product-card-link" th:each="prodotto : ${prodotti}" th:href="@{'/prodotto/' + ${prodotto.id}}">
-    <div class="product-card">
+ <div class="down-side">
+  <div class="card-wrapper">
+    <a class="product-card-link" th:each="prodotto : ${prodotti}" 
+       th:href="@{'/prodotto/' + ${prodotto.id}}">
+      <div class="product-card">
 
-      <!-- Immagine -->
-      <div class="product-image-box">
-        <img th:if="${prodotto.foto != null}" class="product-image"
-             th:src="@{'/images/prodotti-foto/' + ${prodotto.id} + '/' + ${prodotto.foto}}"
-             alt="Foto prodotto" />
-        <div th:unless="${prodotto.foto != null}" class="product-image flex center">
-          Nessuna foto disponibile
+        <!-- Immagine -->
+        <div class="product-image-box">
+          <img th:if="${prodotto.foto != null}" class="product-image"
+               th:src="@{'/images/prodotti-foto/' + ${prodotto.id} + '/' + ${prodotto.foto}}"
+               alt="Foto prodotto" />
+          <div th:unless="${prodotto.foto != null}" class="product-image flex center">
+            Nessuna foto disponibile
+          </div>
         </div>
+
+        <!-- Nome, prezzo -->
+        <div class="product-info">
+          <h3 th:text="${prodotto.nome}">Nome prodotto</h3>
+          <p th:text="'Prezzo: € ' + ${prodotto.prezzo}">Prezzo</p>
+        </div>
+
       </div>
-
-      <!-- Nome, prezzo, descrizione -->
-      <div class="product-info">
-        <h3 th:text="${prodotto.nome}">Nome prodotto</h3>
-        <p th:text="'Prezzo: € ' + ${prodotto.prezzo}">Prezzo</p>
-
-      </div>
-
-    </div>
-  </a>
-</div>
-
+    </a>
+  </div>
 </div>
 
   

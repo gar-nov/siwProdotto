@@ -1,5 +1,7 @@
 package it.uniroma3.siw.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -8,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -44,9 +47,20 @@ public class Prodotto {
 	    @JoinColumn(name = "categoria_id")
 	    private Categoria categoria;
 
+	    @ManyToMany
+	    private List<Prodotto> prodottiSimili;
+
 	     
 	    
 	    // GETTER & SETTER
+	    public List<Prodotto> getProdottiSimili() {
+	        return prodottiSimili;
+	    }
+
+	    public void setProdottiSimili(List<Prodotto> prodottiSimili) {
+	        this.prodottiSimili = prodottiSimili;
+	    }
+
 	    public Long getId() {
 	        return id;
 	    }
