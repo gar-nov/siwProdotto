@@ -36,12 +36,19 @@
         
      <div class="content-flex">
 <!--  Box Categorie -->
-     <div class="category-box">
+<div class="category-box">
   <a th:href="@{/prodotti}">Tutti</a>
+  
   <a th:each="categoria : ${categorie}"
      th:href="@{'/categoria/' + ${categoria.id}}"
      th:text="${categoria.nome}">Categoria</a>
+  
+  <!-- Link per aggiungere categoria -->
+  <a th:href="@{/admin/categoria/form}" class="add-category-link">
+    + Aggiungi categoria
+  </a>
 </div>
+
 
 </div>
        <div class="grid-container">

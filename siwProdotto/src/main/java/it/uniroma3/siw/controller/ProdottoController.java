@@ -20,11 +20,14 @@ import it.uniroma3.siw.service.CategoriaService;
 import it.uniroma3.siw.service.CommentoService;
 import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.ProdottoService;
+import it.uniroma3.siw.validator.CommentoValidator;
+import it.uniroma3.siw.model.User;
 
 
 @Controller
 public class ProdottoController {
 	public static final int NUM_OF_PRODUCTS = 5; 
+	public static final int NUM_OF_COMMS = 3; 
 
 	@Autowired
 	private ProdottoService prodottoService;
@@ -39,6 +42,10 @@ public class ProdottoController {
 	
 	@Autowired
 	private CredentialsService credentialsService;
+	
+	@Autowired
+	private CommentoValidator commentoValidator;
+
 	
 //gestione prodotti in home
 	@GetMapping("/home")
@@ -66,18 +73,17 @@ public class ProdottoController {
         model.addAttribute("prodottiSimili", prodottiSimili);
 
 	    // Commenti recenti (3)
-	    List<Commento> commenti = commentoService.findFirstNumByProdotto(3, prodotto);
-	    model.addAttribute("commenti", commenti);
+	    List<Commento> commenti = commentoService.findFirstNumByProdotto(NUM_OF_COMMS, prodotto);
+	    model.addAttribute("commenti", commenti); 
+	    model.addAttribute("commentiVuoti", commenti.isEmpty()); 
 
-	    // ID dell'utente autenticato (per gestire modifica/elimina commenti)
+	    
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null && auth.isAuthenticated() && !"anonymousUser".equals(auth.getPrincipal())) {
-            UserDetails userDetails = (UserDetails) auth.getPrincipal();
-            Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-            model.addAttribute("currentUserId", credentials.getUser().getId());
-        }
-
+	    // Utente autenticato
+	    User currentUser = credentialsService.getCurrentUser();
+	    if (currentUser != null) {
+	        model.addAttribute("currentUserId", currentUser.getId());
+	    }
 	    return "prodottoDetail";
 	}
 

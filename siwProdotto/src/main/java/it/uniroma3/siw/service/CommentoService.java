@@ -38,16 +38,19 @@ public class CommentoService {
 	    return iCommenti;
 	}
 	
+	public List<Commento> findByProdotto(Prodotto prodotto) {
+        return commentoRepository.findByProdottoOrderByDataDesc(prodotto);
+    }
+	
 	@Transactional
-	public void save(Commento commento, Prodotto prodotto, User user) {
-	    commento.setProdotto(prodotto);
-	    commento.setUser(user);
-
-	    // Imposta data e ora attuali
-	    commento.setData(LocalDateTime.now());
-
+	public void save(Commento commento) {
 	    commentoRepository.save(commento);
 	}
+	
+	public Commento findById(Long id) {
+	    return commentoRepository.findById(id).get();
+	}
+
 
 
 }

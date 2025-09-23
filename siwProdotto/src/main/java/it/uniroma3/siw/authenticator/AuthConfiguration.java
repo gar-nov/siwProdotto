@@ -42,7 +42,7 @@ public class AuthConfiguration {
             .csrf(csrf -> csrf.disable())
             .cors(cors -> cors.disable())
             .authorizeHttpRequests(authz -> authz
-                 .requestMatchers(HttpMethod.GET, "/", "/home", "/register", "/login","/prodotti","/prodotto/**","/categoria/**", "/login/**", "/css/**", "/images/**", "/favicon.ico").permitAll()
+                 .requestMatchers(HttpMethod.GET, "/", "/home","/commenti/**", "/register", "/login","/prodotti","/prodotto/**","/categoria/**", "/login/**", "/css/**", "/images/**", "/favicon.ico").permitAll()
                  .requestMatchers(HttpMethod.POST, "/register", "/login").permitAll()
                  .requestMatchers(HttpMethod.GET, "/user/").authenticated()                
                  .requestMatchers(HttpMethod.GET, "/admin/**").hasAuthority(ADMIN_ROLE)

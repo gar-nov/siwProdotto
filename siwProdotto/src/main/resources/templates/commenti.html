@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8"> 
+    <title>Orologi da polso</title>
+    <link rel="stylesheet" href="/css/stile.css"> 
+</head> 
+
+<body class="prodotto-detail-page"> 
+
+<header class="navbar"> 
+  <div class="navbar-content"> 
+    <!-- Logo a sinistra --> 
+    <div class="logo"> 
+        <a href="/"> 
+                <img src="/images/logo.png" alt="Logo"> 
+            </a> 
+    </div> 
+  </div> 
+ </header> 
+   <!-- DETTAGLIO PRODOTTO --> 
+    <div class="flex-column center" th:if="${prodotto}"> 
+        <div class="prodotto-container"> 
+            <!-- Immagine prodotto --> 
+            <div>   
+                <div th:if="${prodotto.foto}"> 
+                    <img class="prodotto-image-bigger" 
+                          th:src="@{'/images/prodotti/' + ${prodotto.id} + '/' + ${prodotto.foto}}" />
+                </div>
+                <div th:unless="${prodotto.foto}">
+                    <div class="prodotto-image-bigger flex center">Nessuna foto disponibile</div>
+                </div>
+            </div>
+
+            <!-- Info prodotto -->
+            <div class="prodotto-info">
+                <div class="title" th:text="${prodotto.nome}">Nome Prodotto</div>
+
+                <div class="title2">
+                    Prezzo: <span th:text="${prodotto.prezzo}">0.00</span> €
+                </div>
+
+                <div class="title2">
+                    Categoria: 
+                    <a th:href="@{'/categoria/' + ${prodotto.categoria.id}}"
+                       th:text="${prodotto.categoria.nome}">Categoria</a>
+                </div>
+
+                <div class="title2" th:text="${prodotto.descrizione}">Descrizione del prodotto</div>
+
+                <!-- Pulsanti modifica/cancella -->
+                 <div class="navbar-right" sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
+    <button class="navbar-link"
+            th:onclick="'window.location.href=\'/prodotto/edit/form/' + '[[${prodotto.id}]]\''">
+        Modifica
+    </button>
+
+    <button class="navbar-link"
+            th:onclick="'window.location.href=\'/prodotto/delete/confirm/' + '[[${prodotto.id}]]\''">
+        Cancella
+    </button>
+</div>
+
+               
+                    
+                </div>
+            </div>
+        </div>
+    
+
+    <div th:unless="${prodotto}">
+        Questo prodotto non esiste!
+    </div>
+  
+
+<div class="comment-section">
+  <div class="middle-part">
+    <div class="left-placeholder"></div>
+
+    <div class="title-wrapper">
+      <h2 class="collection-title">Cosa ne pensano gli utenti..</h2>
+    </div>
+  </div>
+
+  <!-- Form sempre visibile per utenti autenticati -->
+  <div class="comment-form-wrapper" sec:authorize="isAuthenticated()">
+    <form th:action="@{/prodotto/{id}/commenti(id=${prodotto.id})}" 
+          method="post" 
+          th:object="${commento}">
+      <textarea th:field="*{testo}" placeholder="Scrivi il tuo commento..."></textarea>
+      <div th:if="${#fields.hasErrors('testo')}" 
+           th:errors="*{testo}" 
+           class="error"></div>
+      <button type="submit">Invia</button>
+    </form>
+  </div>
+
+  <!-- Messaggio se nessun commento -->
+  <p th:if="${commentiVuoti}">Ancora nessun commento</p>
+
+  <!-- Lista commenti -->
+  <div th:unless="${commentiVuoti}" class="commenti-wrapper">
+    <div th:each="commento : ${commenti}" class="commento">
+    
+        <!-- RIGA CON TESTO E MODIFICA -->
+  <div class="commento-riga">
+    <p th:text="${commento.testo}"></p>
+
+    <div sec:authorize="isAuthenticated()">
+         
+      <a class="navbar-link" th:href="@{'/commenti/' + ${commento.id} + '/modifica'}">Modifica</a>
+    </div>
+  </div>
+      <small>
+        <span th:text="${commento.user.nome}"></span>
+        &nbsp;|&nbsp;
+        <span th:text="${#temporals.format(commento.data, 'dd/MM/yyyy HH:mm')}"></span>
+      </small>
+      
+
+</div>
+    </div>
+  </div>
+
+
+
+ 
+
+
+
+
+
+
+    
+  
+</body>
+
+</html>
+
+</html>

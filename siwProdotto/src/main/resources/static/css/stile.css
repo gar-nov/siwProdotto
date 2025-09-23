@@ -317,10 +317,19 @@ body.prodotto-detail-page {
   font-size: 22px;
 }
 
-.commenti-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+/* Contenitore del form */
+.comment-form-wrapper {
+  max-width: 400px;   /* così il form non si allarga troppo */
+}
+
+.comment-form-wrapper textarea {
+  width: 90%;          /* occuperà tutta la larghezza del box */
+  height: 120px;        /* altezza fissa che scegli tu */
+  resize: none;         /* nessun ridimensionamento possibile */
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
 }
 
 .commento {
@@ -331,12 +340,44 @@ body.prodotto-detail-page {
 }
 
 .commento p {
-  margin: 5px 0;
+  margin: 6px 0;
   color: #222;
 }
 
+.comment-section {
+  display: flex;
+  flex-direction: column; /* figli uno sotto l’altro */
+  align-items: center;    /* contenuto centrato dentro */
+  gap: 20px;              /* spazio verticale tra blocchi */
+  margin: 60px 0 30px 0;  
+  width: 100%;            /* occupa tutto lo spazio disponibile */
+  max-width: none;        /* disattiva il limite a 900px */
+  padding: 20px;
+  background-color: #e9f1fb;
+  border-radius: 0;       /* se vuoi senza bordi arrotondati ai lati */
+}
+
+.commento-riga {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+
+
+
 
 /* ========== PRODOTTI SIMILI ========== */
+.commento {
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px; /* 🔥 CREA SPAZIO TRA I BOX */
+    width: 300px;
+}
+
 .prodotti-simili-section {
   margin: 60px auto;
   max-width: 1000px;

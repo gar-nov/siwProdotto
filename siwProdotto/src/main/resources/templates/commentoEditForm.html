@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifica Commento</title>
+    <link rel="stylesheet" href="/css/stile.css">
+</head>
+
+<body class="comment-section">
+
+<div class="page-wrapper">
+
+   <div class="comment-form-wrapper" >
+        <h2 class="form-title">Modifica il tuo commento</h2>
+        
+
+        <form th:action="@{'/commenti/edit/' + ${commento.id}}" th:object="${commento}" method="post">
+
+            <textarea th:field="*{testo}" placeholder="Modifica il commento..." rows="5"></textarea>
+
+            <div th:if="${#fields.hasErrors('testo')}" th:errors="*{testo}" class="error"></div>
+
+            <button type="submit" class="navbar-link">Salva modifiche</button>
+             <a th:href="@{'/prodotto/' + ${commento.prodotto.id} + '/commenti'}" class="navbar-link" style="margin-top: 10px;">Annulla</a>
+        </form>
+
+       
+    </div>
+
+</div>
+
+</body>
+</html>

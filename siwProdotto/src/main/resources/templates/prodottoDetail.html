@@ -72,27 +72,7 @@
     <div th:unless="${prodotto}">
         Questo prodotto non esiste!
     </div>
-<div class="middle-part">
-  <div class="left-placeholder"></div>
-
-  <div class="title-wrapper">
-    <h2 class="collection-title">Commenti</h2>
-    <div class="commenti-wrapper">
-            <div class="commento" th:each="commento : ${commenti}">
-                <p><strong th:text="${commento.autore.username}">Autore</strong>:</p>
-                <p th:text="${commento.testo}">Testo del commento</p>
-            </div>
-        </div>
-  </div>
-
-  <div class="button-wrapper">
-    <a href="/prodotti" class="see-all">Visualizza tutti</a>
-  </div>
-</div>
-
-
-
-<div class="down-side">
+  <div class="down-side">
 	 <div class="title-wrapper">
 	     <h2 class="collection-title">Prodotti simili</h2>
     </div>
@@ -129,6 +109,62 @@
   </div>
 
 </div>
+
+<div class="comment-section">
+<div class="middle-part">
+  <div class="left-placeholder"></div>
+
+<div class="title-wrapper">
+  <h2 class="collection-title">Cosa ne pensano gli utenti..</h2>
+</div>
+</div>
+ 
+
+   <!-- Se non ci sono commenti -->
+    <div th:if="${commentiVuoti}" class="comment-form-wrapper">
+	   <div class="per-autenticati" sec:authorize="isAuthenticated()">
+       <button class="navbar-link"
+        th:onclick="'window.location.href=\'/prodotto/' + ${prodotto.id} + '/commenti\''">
+    Scrivi il primo commento
+</button>
+
+
+     
+       </div>
+       <p sec:authorize="isAnonymous()">Ancora nessun commento</p>
+    </div>
+
+    <!-- Se ci sono commenti -->
+    <div th:unless="${commentiVuoti}" class="commenti-wrapper">
+        <div th:each="commento : ${commenti}" class="commento">
+                   <!-- RIGA CON TESTO E MODIFICA -->
+  <div class="commento-riga">
+    <p th:text="${commento.testo}"></p>
+
+    <div sec:authorize="isAuthenticated()">
+        
+      <a class="navbar-link" th:href="@{'/commenti/' + ${commento.id} + '/modifica'}">Modifica</a>
+    </div>
+  </div>
+            <small th:text="${commento.user.nome}">Autore</small>
+        </div> 
+ 
+
+        <a class="navbar-link" th:href="@{/prodotto/{id}/commenti(id=${prodotto.id})}">
+   visualizza tutti i commenti
+</a>
+ </div>
+    </div>
+
+   
+  </div>
+
+ 
+
+
+
+
+
 
     
   
