@@ -30,4 +30,9 @@ public class CategoriaService {
 		public Categoria findById(Long id) {
 			return categoriaRepository.findById(id).get();
 		}
+		
+		public void save(Categoria categoria) {
+		    categoriaRepository.save(categoria);
+		}
+
 }

@@ -44,7 +44,7 @@
      th:text="${categoria.nome}">Categoria</a>
   
   <!-- Link per aggiungere categoria -->
-  <a th:href="@{/admin/categoria/form}" class="add-category-link">
+  <a th:href="@{/admin/categoria/form}" class="add-category-link" sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
     + Aggiungi categoria
   </a>
 </div>

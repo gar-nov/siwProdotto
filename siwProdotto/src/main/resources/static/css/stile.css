@@ -319,7 +319,7 @@ body.prodotto-detail-page {
 
 /* Contenitore del form */
 .comment-form-wrapper {
-  max-width: 400px;   /* così il form non si allarga troppo */
+  max-width: 600px;   /* così il form non si allarga troppo */
 }
 
 .comment-form-wrapper textarea {
@@ -426,6 +426,19 @@ body.prodotto-detail-page {
   font-weight: 500;
  
 }
+/*****STILE INPUT FORM***********/
+form {
+  border-radius: 30px;
+  padding: 20px;
+  background-color: #fff;
+}
+
+input[type="text"],
+input[type="password"] {
+  border-radius: 10px;
+  padding: 8px;
+}
+
 
 /***********login,register*************/
 .create-account h3 {

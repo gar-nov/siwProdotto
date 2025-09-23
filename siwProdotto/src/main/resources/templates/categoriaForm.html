@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuova Categoria</title>
+    <link rel="stylesheet" href="/css/stile.css">
+</head>
+
+<body class="comment-section">
+
+<div class="page-wrapper">
+
+   <div class="comment-form-wrapper">
+        <h2 class="form-title">Aggiungi una nuova categoria</h2>
+
+        <form th:action="@{/admin/categoria}" th:object="${categoria}" method="post">
+
+            <input type="text" th:field="*{nome}" placeholder="Nome categoria" />
+
+            <div th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" class="error"></div>
+
+            <button type="submit" class="navbar-link">Salva</button>
+            <a th:href="@{/prodotti}" class="navbar-link">Annulla</a>
+        </form>
+
+   </div>
+
+</div>
+
+</body>
+</html>
