@@ -5,9 +5,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import it.uniroma3.siw.model.Prodotto;
 import it.uniroma3.siw.repository.ProdottoRepository;
+import jakarta.validation.Valid;
 
 
 @Service
@@ -43,5 +45,16 @@ public class ProdottoService {
 	public Prodotto findById(Long id) {
 	    return prodottoRepository.findById(id).get();
 	}
+
+	 @Transactional
+	 public Prodotto save(Prodotto prodotto) {
+		 return prodottoRepository.save(prodotto);
+	}
+	 
+	 public boolean alreadyExists(Prodotto prodotto) {
+			return prodottoRepository.existsByNomeAndDescrizioneAndFotoAndCategoria(
+					prodotto.getNome(), prodotto.getDescrizione(), prodotto.getFoto(),
+					prodotto.getCategoria());
+		}
 
 }

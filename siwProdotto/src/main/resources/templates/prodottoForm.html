@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Aggiungi Prodotto</title>
+    <link rel="stylesheet" href="/css/stile.css"> 
+</head>
+
+<body class="register-page">
+
+<!-- HEADER -->
+<header class="navbar">
+  <div class="navbar-content">
+    <div class="logo">
+       <a href="/">
+          <img src="/images/logo.png" alt="Logo PickMe">
+       </a>
+    </div>  
+  </div>
+</header>
+
+<!-- CONTENITORE CENTRALE -->
+<div class="page-wrapper">
+  <div class="prodotto-container">
+
+    <form th:action="@{/prodotti}" method="post" th:object="${prodotto}" enctype="multipart/form-data">
+      <table>
+        <div class="flex title">Aggiungi un nuovo prodotto</div>
+
+        <!-- Nome -->
+        <tr>
+          <td>Nome</td>
+          <td><input type="text" th:field="*{nome}" placeholder="Nome del prodotto" /></td>
+          <td th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" style="color:red"></td>
+        </tr>
+
+        <!-- Prezzo -->
+        <tr>
+          <td>Prezzo</td>
+          <td><input type="number" step="0.01" th:field="*{prezzo}" placeholder="Es: 19.99" /></td>
+          <td th:if="${#fields.hasErrors('prezzo')}" th:errors="*{prezzo}" style="color:red"></td>
+        </tr>
+
+        <!-- Descrizione -->
+        <tr>
+          <td>Descrizione</td>
+          <td><textarea th:field="*{descrizione}" placeholder="Descrizione"></textarea></td>
+         
+          <td th:if="${#fields.hasErrors('descrizione')}" th:errors="*{descrizione}" style="color:red"></td>
+        </tr>
+
+        <!-- Categoria -->
+        <tr>
+          <td>Categoria</td>
+          <td>
+            <select th:field="*{categoria}">
+              <option th:each="cat : ${categorie}" th:value="${cat.id}" th:text="${cat.nome}"></option>
+            </select>
+          </td>
+          <td th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}" style="color:red"></td>
+        </tr>
+
+        <!-- Immagine -->
+        <tr>
+          <td>Foto</td>
+          <td><input type="file" name="image" accept="image/*" /></td>
+          <td></td>
+        </tr>
+
+        <!-- Pulsante -->
+        <tr>
+          <td colspan="2">
+            <button class="navbar-link" type="submit">Salva prodotto</button>
+          </td>
+        </tr>
+      </table>
+    </form>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div th:insert="~{fragments/base.html :: footer}"></div>
+
+</body>
+</html>

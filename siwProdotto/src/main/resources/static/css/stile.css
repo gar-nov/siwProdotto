@@ -322,7 +322,8 @@ body.prodotto-detail-page {
   max-width: 600px;   /* così il form non si allarga troppo */
 }
 
-.comment-form-wrapper textarea {
+.comment-form-wrapper textarea, 
+.prodotto-container textarea {
   width: 90%;          /* occuperà tutta la larghezza del box */
   height: 120px;        /* altezza fissa che scegli tu */
   resize: none;         /* nessun ridimensionamento possibile */

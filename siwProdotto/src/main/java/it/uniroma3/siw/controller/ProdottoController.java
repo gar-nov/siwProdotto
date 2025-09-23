@@ -1,17 +1,24 @@
 package it.uniroma3.siw.controller;
 
-import java.util.ArrayList;
+import java.io.IOException;
+
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siw.model.Commento;
 import it.uniroma3.siw.model.Credentials;
@@ -21,6 +28,8 @@ import it.uniroma3.siw.service.CommentoService;
 import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.ProdottoService;
 import it.uniroma3.siw.validator.CommentoValidator;
+import it.uniroma3.siw.validator.ProdottoValidator;
+import jakarta.validation.Valid;
 import it.uniroma3.siw.model.User;
 
 
@@ -45,9 +54,12 @@ public class ProdottoController {
 	
 	@Autowired
 	private CommentoValidator commentoValidator;
+	
+	@Autowired
+	private ProdottoValidator prodottoValidator;
 
 	
-//gestione prodotti in home
+/////////////////////gestione prodotti in home
 	@GetMapping("/home")
 	public String getProdottoHome(Model model) {
 		 List<Prodotto> prodotti = prodottoService.findFirstNum(NUM_OF_PRODUCTS);
@@ -86,5 +98,87 @@ public class ProdottoController {
 	    }
 	    return "prodottoDetail";
 	}
+	
+////////////////////////////gestione aggiunta prodotto
+	@GetMapping("/prodotto/form")
+	public String AddProdotto(Model model) {
+	    // 🔐 Recupera l'autenticazione
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+	    if (authentication == null || !authentication.isAuthenticated()) {
+	        return "unauthorized";
+	    }
+
+	    // 🔎 Recupera lo username (⚠️ non è il nome dell'utente!)
+	    String username = authentication.getName();
+
+	    // 📦 Recupera le credenziali
+	    Credentials credentials = credentialsService.getCredentials(username);
+
+	    // 🔒 Controllo ruolo
+	    if (credentials == null || !credentials.getRole().equals("ADMIN")) {
+	        return "unauthorized";
+	    }
+
+	    // 👤 (facoltativo) Se ti serve l'utente:
+	    User currentUser = credentials.getUser();
+
+	    // 👇 Prepara il form
+	    model.addAttribute("prodotto", new Prodotto());
+	    model.addAttribute("categorie", categoriaService.findAll());
+	    return "prodottoForm.html";
+	}
+
+
+
+	
+	@PostMapping("/prodotti")
+	public String addProdotto(@Valid @ModelAttribute("prodotto") Prodotto prodotto,
+	                          BindingResult bindingResult,
+	                          Model model,
+	                          @RequestParam("image") MultipartFile multipartFile) throws IOException {
+
+	    //Controllo accesso: solo admin può aggiungere
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+	    if (authentication == null || !authentication.isAuthenticated()) {
+	        return "unauthorized";
+	    }
+
+	    String username = authentication.getName();
+	    Credentials credentials = credentialsService.getCredentials(username);
+
+	    if (credentials == null || !credentials.getRole().equals("ADMIN")) {
+	        return "unauthorized";
+	    }
+
+	    String fileName = null;
+        if (!multipartFile.isEmpty()) {
+            fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+            fileName = fileName.replaceAll("\\s+", "");
+	        prodotto.setFoto(fileName);
+	    }
+
+	   
+	    prodottoValidator.validate(prodotto, bindingResult);
+
+	    if (bindingResult.hasErrors()) {
+	        model.addAttribute("categorie", categoriaService.findAll());
+	        return "prodottoForm.html";
+	    }
+
+	    // 💾 Salvataggio
+	    Prodotto prodottoSalvato = prodottoService.save(prodotto);
+	    if (!multipartFile.isEmpty()) {
+	        String uploadDir1 = "src/main/resources/static/images/prodotti-foto/" + prodottoSalvato.getId();
+	        String uploadDir2 = "target/classes/static/images/prodotti-foto/" + prodottoSalvato.getId();
+	        FileUploadUtil.saveFile(uploadDir1, fileName, multipartFile);
+	        FileUploadUtil.saveFile(uploadDir2, fileName, multipartFile);
+	    }
+
+	    return "redirect:/prodotto/" + prodottoSalvato.getId();
+	}
+
+
 
 }

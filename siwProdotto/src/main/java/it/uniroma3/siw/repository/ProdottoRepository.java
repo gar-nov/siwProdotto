@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
+import it.uniroma3.siw.model.Categoria;
 import it.uniroma3.siw.model.Prodotto;
 
 
@@ -12,6 +13,9 @@ public interface ProdottoRepository extends CrudRepository<Prodotto, Long> {
 
 //lista dall'ultimo al primo
 	public List<Prodotto> findAllByOrderByIdDesc(); 
+	
+	public boolean existsByNomeAndDescrizioneAndFotoAndCategoria(String nome,
+			String descrizione, String foto, Categoria categoria);
 
 
 }
