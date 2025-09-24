@@ -26,7 +26,7 @@
             <div>   
                 <div th:if="${prodotto.foto}"> 
                     <img class="prodotto-image-bigger" 
-                          th:src="@{'/images/prodotti/' + ${prodotto.id} + '/' + ${prodotto.foto}}" />
+                          th:src="@{'/images/prodotti-foto/' + ${prodotto.id} + '/' + ${prodotto.foto}}" />
                 </div>
                 <div th:unless="${prodotto.foto}">
                     <div class="prodotto-image-bigger flex center">Nessuna foto disponibile</div>
@@ -50,17 +50,10 @@
                 <div class="title2" th:text="${prodotto.descrizione}">Descrizione del prodotto</div>
 
                 <!-- Pulsanti modifica/cancella -->
-                 <div class="navbar-right" sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
-    <button class="navbar-link"
-            th:onclick="'window.location.href=\'/prodotto/edit/form/' + '[[${prodotto.id}]]\''">
-        Modifica
-    </button>
-
-    <button class="navbar-link"
-            th:onclick="'window.location.href=\'/prodotto/delete/confirm/' + '[[${prodotto.id}]]\''">
-        Cancella
-    </button>
-</div>
+                  <div class="navbar-right" sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
+                     <a class="navbar-link" th:href="@{'/prodotto/edit/form/' + ${prodotto.id}}">Modifica</a>
+                     <a class="navbar-link" th:href="@{'/prodotto/delete/confirm/' + ${prodotto.id}}">cancella</a>
+                 </div> 
 
                
                     
@@ -108,9 +101,12 @@
     <p th:text="${commento.testo}"></p>
 
     <div sec:authorize="isAuthenticated()">
-         
-      <a class="navbar-link" th:href="@{'/commenti/' + ${commento.id} + '/modifica'}">Modifica</a>
-    </div>
+  <div th:if="${commento.user != null and commento.user.id == currentUserId}">
+    <a class="navbar-link" th:href="@{'/commenti/' + ${commento.id} + '/modifica'}">Modifica</a>
+    <a class="navbar-link" th:href="@{'/commenti/' + ${commento.id} + '/delete'}">Elimina</a>
+  </div>
+</div>
+
   </div>
       <small>
         <span th:text="${commento.user.nome}"></span>

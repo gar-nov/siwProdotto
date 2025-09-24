@@ -103,6 +103,7 @@ public class CommentoController {
 	    }
 
 	    model.addAttribute("commento", commento);
+	    model.addAttribute("currentUserId", currentUser.getId()); 
 	    return "commentoEditForm"; // pagina con textarea già precompilata
 	}
 

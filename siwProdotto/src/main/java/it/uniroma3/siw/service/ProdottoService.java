@@ -52,9 +52,14 @@ public class ProdottoService {
 	}
 	 
 	 public boolean alreadyExists(Prodotto prodotto) {
-			return prodottoRepository.existsByNomeAndDescrizioneAndFotoAndCategoria(
-					prodotto.getNome(), prodotto.getDescrizione(), prodotto.getFoto(),
+			return prodottoRepository.existsByNomeAndPrezzoAndDescrizioneAndFotoAndCategoria(
+					prodotto.getNome(),prodotto.getPrezzo(), prodotto.getDescrizione(), prodotto.getFoto(),
 					prodotto.getCategoria());
 		}
+	 
+	 public void deleteById(Long id) {
+		    prodottoRepository.deleteById(id);
+		}
+
 
 }

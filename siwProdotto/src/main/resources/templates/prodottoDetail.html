@@ -47,26 +47,16 @@
                        th:text="${prodotto.categoria.nome}">Categoria</a>
                 </div>
 
-                <div class="title2" th:text="${prodotto.descrizione}">Descrizione del prodotto</div>
+             <div class="title2" th:text="${prodotto.descrizione}">Descrizione del prodotto</div>
 
                 <!-- Pulsanti modifica/cancella -->
                  <div class="navbar-right" sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
-    <button class="navbar-link"
-            th:onclick="'window.location.href=\'/prodotto/edit/form/' + '[[${prodotto.id}]]\''">
-        Modifica
-    </button>
-
-    <button class="navbar-link"
-            th:onclick="'window.location.href=\'/prodotto/delete/confirm/' + '[[${prodotto.id}]]\''">
-        Cancella
-    </button>
-</div>
-
-               
-                    
-                </div>
-            </div>
-        </div>
+                     <a class="navbar-link" th:href="@{'/prodotto/edit/form/' + ${prodotto.id}}">Modifica</a>
+                     <a class="navbar-link" th:href="@{'/prodotto/delete/confirm/' + ${prodotto.id}}">cancella</a>
+                 </div>                    
+             </div>
+      </div>
+ </div>
     
 
     <div th:unless="${prodotto}">
@@ -141,10 +131,13 @@
   <div class="commento-riga">
     <p th:text="${commento.testo}"></p>
 
-    <div sec:authorize="isAuthenticated()">
-        
-      <a class="navbar-link" th:href="@{'/commenti/' + ${commento.id} + '/modifica'}">Modifica</a>
-    </div>
+   <div sec:authorize="isAuthenticated()">
+  <div th:if="${commento.user != null and commento.user.id == currentUserId}">
+    <a class="navbar-link" th:href="@{'/commenti/' + ${commento.id} + '/modifica'}">Modifica</a>
+   
+  </div>
+</div>
+
   </div>
             <small th:text="${commento.user.nome}">Autore</small>
         </div> 

@@ -30,6 +30,8 @@ public class Prodotto {
 	    @NotNull
 	    @PositiveOrZero
 	    private double prezzo;
+	    
+	    private static final double EPSILON = 0.0001;
 
 
 
@@ -137,7 +139,7 @@ public class Prodotto {
 	        if (obj == null || getClass() != obj.getClass())
 	            return false;
 	        Prodotto other = (Prodotto) obj;
-	        return Double.compare(other.prezzo, this.prezzo) == 0
+	        return Math.abs(this.prezzo - other.prezzo) < EPSILON
 	                && Objects.equals(this.nome, other.nome)
 	                && Objects.equals(this.descrizione, other.descrizione)
 	                && Objects.equals(this.foto, other.foto)

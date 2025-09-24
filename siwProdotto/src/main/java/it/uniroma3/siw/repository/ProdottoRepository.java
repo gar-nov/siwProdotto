@@ -14,8 +14,8 @@ public interface ProdottoRepository extends CrudRepository<Prodotto, Long> {
 //lista dall'ultimo al primo
 	public List<Prodotto> findAllByOrderByIdDesc(); 
 	
-	public boolean existsByNomeAndDescrizioneAndFotoAndCategoria(String nome,
-			String descrizione, String foto, Categoria categoria);
+	public boolean existsByNomeAndPrezzoAndDescrizioneAndFotoAndCategoria(String nome,
+			Double prezzo,String descrizione, String foto, Categoria categoria);
 
 
 }
