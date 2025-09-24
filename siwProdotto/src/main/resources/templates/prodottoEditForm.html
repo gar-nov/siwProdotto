@@ -23,7 +23,7 @@
 <div class="page-wrapper">
   <div class="prodotto-container">
 
-    <form th:action="@{'/prodotto/edit/' + ${prodotto.id}}" method="post" th:object="${prodotto}" enctype="multipart/form-data">
+    <form th:action="@{'/admin/prodotto/edit/' + ${prodotto.id}}" method="post" th:object="${prodotto}" enctype="multipart/form-data">
       <table>
         <div class="flex title">Modifica il prodotto</div>
 

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import it.uniroma3.siw.model.Categoria;
 import it.uniroma3.siw.model.Commento;
 import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.model.Prodotto;
@@ -100,30 +101,27 @@ public class ProdottoController {
 	}
 	
 ////////////////////////////gestione aggiunta prodotto
-	@GetMapping("/prodotto/form")
+	@GetMapping("/admin/prodotto/form")
 	public String AddProdotto(Model model) {
-	    // 🔐 Recupera l'autenticazione
+	    //Recupera l'autenticazione
 	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 	    if (authentication == null || !authentication.isAuthenticated()) {
 	        return "unauthorized";
 	    }
 
-	    // 🔎 Recupera lo username (⚠️ non è il nome dell'utente!)
+	    //Recupera lo username
 	    String username = authentication.getName();
 
 	    // 📦 Recupera le credenziali
 	    Credentials credentials = credentialsService.getCredentials(username);
 
-	    // 🔒 Controllo ruolo
+	    //Controllo ruolo
 	    if (credentials == null || !credentials.getRole().equals("ADMIN")) {
 	        return "unauthorized";
 	    }
 
-	    // 👤 (facoltativo) Se ti serve l'utente:
-	    User currentUser = credentials.getUser();
 
-	    // 👇 Prepara il form
 	    model.addAttribute("prodotto", new Prodotto());
 	    model.addAttribute("categorie", categoriaService.findAll());
 	    return "prodottoForm.html";
@@ -132,7 +130,7 @@ public class ProdottoController {
 
 
 	
-	@PostMapping("/prodotti")
+	@PostMapping("/admin/prodotti")
 	public String addProdotto(@Valid @ModelAttribute("prodotto") Prodotto prodotto,
 	                          BindingResult bindingResult,
 	                          Model model,
@@ -167,7 +165,7 @@ public class ProdottoController {
 	        return "prodottoForm.html";
 	    }
 
-	    // 💾 Salvataggio
+	    //Salvataggio
 	    Prodotto prodottoSalvato = prodottoService.save(prodotto);
 	    if (!multipartFile.isEmpty()) {
 	        String uploadDir1 = "src/main/resources/static/images/prodotti-foto/" + prodottoSalvato.getId();
@@ -180,7 +178,7 @@ public class ProdottoController {
 	}
 	
 	/////////////////////////////GESTIONE MODIFICA PRODOTTO
-	@GetMapping("/prodotto/edit/form/{id}")
+	@GetMapping("/admin/prodotto/edit/form/{id}")
 	public String editProdottoForm(@PathVariable Long id, Model model) {
 	    Prodotto prodotto = prodottoService.findById(id);
 	    model.addAttribute("prodotto", prodotto);
@@ -194,11 +192,10 @@ public class ProdottoController {
 	    if (credentials != null && "ADMIN".equals(credentials.getRole())) {
 	        return "prodottoEditForm";
 	    }
-
 	    return "unauthorized";
 	}
 	
-	@PostMapping("/prodotto/edit/{id}")
+	@PostMapping("/admin/prodotto/edit/{id}")
 	public String editProdotto(@ModelAttribute("prodotto") Prodotto prodotto,
 	                           BindingResult bindingResult,
 	                           @PathVariable Long id,
@@ -219,10 +216,6 @@ public class ProdottoController {
 	        fileName = fileName.replaceAll("\\s+", "");
 	        prodotto.setFoto(fileName);
 	    }
-	    System.out.println("PREZZO VECCHIO: " + vecchioProdotto.getPrezzo());
-	    System.out.println("PREZZO NUOVO: " + prodotto.getPrezzo());
-	    System.out.println("UGUALI? " + (Math.abs(vecchioProdotto.getPrezzo() - prodotto.getPrezzo()) < 0.0001));
-
 	    // Validazione solo se è stato modificato
 	    if (!vecchioProdotto.equals(prodotto)) {
 	        this.prodottoValidator.validate(prodotto, bindingResult);
@@ -248,7 +241,7 @@ public class ProdottoController {
 	    return "redirect:/prodotto/" + prodottoSalvato.getId();
 	}
 //////////////////////////GESTIONE ELIMINTA PRODOTTO
-	@GetMapping("/prodotto/delete/confirm/{id}")
+	@GetMapping("/admin/prodotto/delete/confirm/{id}")
 	public String confirmDeleteProdotto(@PathVariable("id") Long id) {
 
 	    // Controllo accesso: solo ADMIN può modificare prodotti
@@ -261,10 +254,68 @@ public class ProdottoController {
 	        this.prodottoService.deleteById(id);
 	        return "redirect:/prodotti";
 	    }
-
 	    // NON autorizzato
 	    return "unauthorized";
 	}
+////////////////////////////////GESTIONE PRODOTTI SIMILI
+	@GetMapping("/admin/prodotti/{id}/simili/candidati")
+	public String getCandidatiSimili(@PathVariable("id") Long prodottoId, Model model) {
+	    Prodotto corrente = prodottoService.findById(prodottoId);
+	    Categoria categoria = corrente.getCategoria();
+
+	    // Recupera tutti i prodotti della categoria usando il servizio
+	    List<Prodotto> prodottiDellaCategoria = prodottoService.findByCategoriaOrderByIdDesc(categoria);
+
+
+	    // Rimuovi il prodotto corrente dalla lista
+	    prodottiDellaCategoria.remove(corrente);
+	    //Rimuove anche i prodotti già simili
+	    prodottiDellaCategoria.removeAll(corrente.getProdottiSimili());
+
+
+	    // Passa i dati al model
+	    model.addAttribute("categoria", categoria);
+	    model.addAttribute("prodotti", prodottiDellaCategoria);
+	    model.addAttribute("corrente", corrente);
+	  
+
+	    return "prodottiSimiliCandidati"; 
+	}
+	
+	@GetMapping("/admin/prodotti/{correnteId}/simili/add/{simileId}")
+	public String addProdottoSimile(@PathVariable Long correnteId,
+	                                @PathVariable Long simileId) {
+	    Prodotto corrente = prodottoService.findById(correnteId);
+	    Prodotto simile = prodottoService.findById(simileId);
+
+	    corrente.getProdottiSimili().add(simile);
+	    simile.getProdottiSimili().add(corrente);
+
+	    prodottoService.save(corrente);
+	    prodottoService.save(simile);
+
+	    // dopo l'aggiunta, torno al dettaglio del prodotto corrente
+	    return "redirect:/prodotto/" + correnteId;
+	}
+	/////////////////////GESTIONE ELIMINAZIONE PRODOTTI SIMILI
+	@GetMapping("/admin/prodotti/{id}/simili/remove")
+	public String showProdottiSimiliDaEliminare(@PathVariable Long id, Model model) {
+	    Prodotto prodotto = prodottoService.findById(id);
+
+	    model.addAttribute("corrente", prodotto);
+	    model.addAttribute("prodottiSimili", prodotto.getProdottiSimili());
+
+	    return "prodottiSimiliRemove"; // nuovo file HTML
+	}
+	
+	@GetMapping("/admin/prodotti/{id}/simili/remove/{simileId}")
+	public String removeProdottoSimile(@PathVariable Long id, @PathVariable Long simileId) {
+	    prodottoService.removeSimilar(id, simileId);
+	    return "redirect:/prodotto/" + id;
+	}
+
+
+
 
 
 

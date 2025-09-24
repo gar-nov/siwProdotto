@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Non Autorizzato</title>
+    <link rel="stylesheet" href="/css/stile.css">
+</head>
+<body>
+	
+
+	<div class="grid-container-form">
+		<div class="grid-form">
+			<div class="flex title2">Ops! Si è verificato un errore con la pagina <span th:text="${path}" />
+			</div>
+			<div>Non sei autorizzato!
+			</div>
+			<div class="flex title2">
+			<a class="button" th:href="@{/user/indexU}">Home</a>
+
+			</div>
+		</div>
+	</div>
+
+	
+</body>
+
+
+</html>

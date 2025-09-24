@@ -17,5 +17,7 @@ public interface ProdottoRepository extends CrudRepository<Prodotto, Long> {
 	public boolean existsByNomeAndPrezzoAndDescrizioneAndFotoAndCategoria(String nome,
 			Double prezzo,String descrizione, String foto, Categoria categoria);
 
+	public List<Prodotto> findByCategoriaOrderByIdDesc(Categoria categoria);
+
 
 }

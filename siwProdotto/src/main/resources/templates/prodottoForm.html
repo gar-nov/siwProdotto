@@ -23,7 +23,7 @@
 <div class="page-wrapper">
   <div class="prodotto-container">
 
-    <form th:action="@{/prodotti}" method="post" th:object="${prodotto}" enctype="multipart/form-data">
+    <form th:action="@{/admin/prodotti}" method="post" th:object="${prodotto}" enctype="multipart/form-data">
       <table>
         <div class="flex title">Aggiungi un nuovo prodotto</div>
 
@@ -50,15 +50,7 @@
         </tr>
 
         <!-- Categoria -->
-        <tr>
-          <td>Categoria</td>
-          <td>
-            <select th:field="*{categoria}">
-              <option th:each="cat : ${categorie}" th:value="${cat.id}" th:text="${cat.nome}"></option>
-            </select>
-          </td>
-          <td th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}" style="color:red"></td>
-        </tr>
+        
 
         <!-- Immagine -->
         <tr>
@@ -66,14 +58,31 @@
           <td><input type="file" name="image" accept="image/*" /></td>
           <td></td>
         </tr>
-
+            
+			
         <!-- Pulsante -->
-        <tr>
-          <td colspan="2">
+       
+        
+        
+      </table>
+      
+               <fieldset>
+					<legend>Seleziona Categoria</legend>
+
+					<div th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"style="color:red"></div>
+
+					<div class="grid-container-form">
+						<div class="grid-fit category" th:each="categoria : ${categorie}">
+
+							<label th:for="${'cat_' + categoria.id}" th:text="${categoria.nome}"></label>
+							<input type="radio" th:id="${'cat_' + categoria.id}" th:field="*{categoria}" name="categoria"
+								th:value="${categoria.id}" />
+						</div>
+					</div>
+				</fieldset>
+				<td colspan="2">
             <button class="navbar-link" type="submit">Salva prodotto</button>
           </td>
-        </tr>
-      </table>
     </form>
 
   </div>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Candidati Simili</title>
+    <link rel="stylesheet" href="/css/stile.css">
+</head>
+
+<body class="product-page">
+<header class="navbar">
+  <div class="navbar-content">
+    <!-- Logo a sinistra -->
+    <div class="logo">
+        <a href="/">
+                <img src="/images/logo.png" alt="Logo">
+            </a>
+    </div>
+       
+     
+    
+    </div>
+   
+  </div>
+</header>
+       <div class="page-wrapper">
+         <div class="middle-part">
+              <div class="left-placeholder"></div>
+
+           <div class="title-wrapper">
+               
+               <div class="collection-title" th:text="${categoria.nome}">Nome categoria:</div>
+           </div>
+           <div class="button-wrapper"></div>
+        </div>              
+        
+   
+    <div class="grid-container">
+    <h2 th:text="'Scegli prodotti simili per: ' + ${corrente.nome}"></h2>
+
+    <!-- Se la categoria non esiste -->
+    <div th:unless="${categoria}">
+        <p>Questa categoria non esiste!</p>
+    </div>
+
+    <!-- Card dei candidati -->
+    <div class="card-wrapper">
+        <a th:each="p : ${prodotti}"
+           th:href="@{'/admin/prodotti/' + ${corrente.id} + '/simili/add/' + ${p.id}}"
+           class="product-card-link">
+           
+            <div class="product-card">
+                <!-- immagine -->
+                <div class="product-image-box">
+                    <img th:if="${p.foto != null}" class="product-image"
+                         th:src="@{'/images/prodotti-foto/' + ${p.id} + '/' + ${p.foto}}"
+                         alt="Foto prodotto" />
+                    <div th:unless="${p.foto != null}" class="product-image flex center">
+                        Nessuna foto
+                    </div>
+                </div>
+
+                <!-- nome e prezzo -->
+                <div class="product-info">
+                    <h3 th:text="${p.nome}"></h3>
+                    <p th:text="'Prezzo: ' + ${p.prezzo} + ' €'"></p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+
+</div>
+
+    
+    <div th:insert="~{fragments/base.html :: footer}"></div>
+</body>
+
+</html>

@@ -130,7 +130,21 @@ html, body {
   transition: background-color 0.3s ease;
 }
 
+.simili-buttons {
+  margin-top: 40px;
+  display: flex;
+  gap: 10px;
+}
+
+
 /* ========== Sezione prodotti (DOWN SIDE) ========== */
+.simili-section {
+  display: flex;
+  flex-direction: column;  /* ✅ imposta direzione verticale */
+  gap: 5rem;                /* spazio tra i figli */
+  margin-top: 2rem;
+}
+
 .down-side {
   padding: 1.5rem;
   display: flex;
@@ -237,6 +251,20 @@ html, body {
 .category-box a:hover {
   background-color: black;
   color: white;
+}
+
+.grid-containerCNG {
+ display: grid;
+  grid-template-columns: repeat(auto-fill, 250px);
+  gap: 0.6rem; /* ⬅️ Ridotto rispetto a 1.2rem */
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.card-wrapperCNG {
+ width: auto;
+  display: flex;
+  justify-content: center;
 }
 /*********PRODOTTODETAIL****************/
 

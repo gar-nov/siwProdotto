@@ -51,8 +51,8 @@
 
                 <!-- Pulsanti modifica/cancella -->
                  <div class="navbar-right" sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
-                     <a class="navbar-link" th:href="@{'/prodotto/edit/form/' + ${prodotto.id}}">Modifica</a>
-                     <a class="navbar-link" th:href="@{'/prodotto/delete/confirm/' + ${prodotto.id}}">cancella</a>
+                     <a class="navbar-link" th:href="@{'/admin/prodotto/edit/form/' + ${prodotto.id}}">Modifica</a>
+                     <a class="navbar-link" th:href="@{'/admin/prodotto/delete/confirm/' + ${prodotto.id}}">cancella</a>
                  </div>                    
              </div>
       </div>
@@ -62,11 +62,25 @@
     <div th:unless="${prodotto}">
         Questo prodotto non esiste!
     </div>
+<div class="simili-section">
   <div class="down-side">
 	 <div class="title-wrapper">
 	     <h2 class="collection-title">Prodotti simili</h2>
-    </div>
+	  </div>
+	     <div class="simili-buttons" sec:authorize="hasAuthority('ADMIN')">
+    <button class="navbar-link"
+            th:onclick="'window.location.href=\'/admin/prodotti/' + ${prodotto.id} + '/simili/candidati\''">
+        Aggiungi prodotti simili
+    </button>
+    <button class="navbar-link"
+        th:onclick="'window.location.href=\'/admin/prodotti/' + ${prodotto.id} + '/simili/remove\''">
+    Elimina prodotti simili
+</button>
 
+</div>
+
+    
+</div>
   <!-- Se NON ci sono prodotti simili -->
   <p th:if="${#lists.isEmpty(prodotto.prodottiSimili)}" class="empty-message">
     Nessun prodotto simile disponibile
@@ -97,6 +111,7 @@
       </div>
     </a>
   </div>
+
 
 </div>
 

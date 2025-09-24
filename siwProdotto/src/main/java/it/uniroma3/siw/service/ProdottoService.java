@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import it.uniroma3.siw.model.Categoria;
 import it.uniroma3.siw.model.Prodotto;
 import it.uniroma3.siw.repository.ProdottoRepository;
 import jakarta.validation.Valid;
@@ -60,6 +61,22 @@ public class ProdottoService {
 	 public void deleteById(Long id) {
 		    prodottoRepository.deleteById(id);
 		}
+
+	 public List<Prodotto> findByCategoriaOrderByIdDesc(Categoria categoria) {
+		    return prodottoRepository.findByCategoriaOrderByIdDesc(categoria);
+		}
+	 
+	 public void removeSimilar(Long idPrincipale, Long idSimile) {
+		    Prodotto principale = prodottoRepository.findById(idPrincipale).get();
+		    Prodotto simile = prodottoRepository.findById(idSimile).get();
+
+		    principale.getProdottiSimili().remove(simile);
+		    simile.getProdottiSimili().remove(principale);
+
+		    prodottoRepository.save(principale);
+		    prodottoRepository.save(simile);
+		}
+
 
 
 }
