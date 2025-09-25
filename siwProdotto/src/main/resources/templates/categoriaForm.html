@@ -17,7 +17,9 @@
 
             <input type="text" th:field="*{nome}" placeholder="Nome categoria" />
 
-            <div th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" class="error"></div>
+          <div th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" style="color:red"></div>
+
+            
 
             <button type="submit" class="navbar-link">Salva</button>
             <a th:href="@{/prodotti}" class="navbar-link">Annulla</a>

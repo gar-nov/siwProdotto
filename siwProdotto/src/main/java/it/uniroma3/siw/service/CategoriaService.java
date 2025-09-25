@@ -34,5 +34,10 @@ public class CategoriaService {
 		public void save(Categoria categoria) {
 		    categoriaRepository.save(categoria);
 		}
+		
+		public boolean existsByNome(String nome) {
+		    return this.categoriaRepository.existsByNome(nome);
+		}
+
 
 }

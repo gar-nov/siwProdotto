@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import it.uniroma3.siw.model.Categoria;
 import it.uniroma3.siw.model.Prodotto;
 import it.uniroma3.siw.service.CategoriaService;
+import it.uniroma3.siw.validator.CategoriaValidator;
 import jakarta.validation.Valid;
 
 @Controller
@@ -23,6 +24,8 @@ public class CategoriaController {
 	@Autowired
 	private CategoriaService categoriaService;
 
+	@Autowired
+	private CategoriaValidator categoriaValidator;
 	@GetMapping("/categoria/{id}")
 	public String getCategoria(@PathVariable("id") Long id, Model model) {
 		Categoria categoria = categoriaService.findById(id);
@@ -48,6 +51,8 @@ public class CategoriaController {
 	public String addCategoria(@Valid @ModelAttribute("categoria") Categoria categoria,
 	                           BindingResult bindingResult,
 	                           Model model) {
+
+		categoriaValidator.validate(categoria, bindingResult);
 
 	    if (bindingResult.hasErrors()) {
 	        // Se ci sono errori, torno al form con l'elenco categorie

@@ -64,7 +64,6 @@ public class ProdottoController {
 	@GetMapping("/home")
 	public String getProdottoHome(Model model) {
 		 List<Prodotto> prodotti = prodottoService.findFirstNum(NUM_OF_PRODUCTS);
-		    System.out.println("PRODOTTI RECUPERATI: " + prodotti.size()); //per il debug
 		    model.addAttribute("prodotti", prodotti);
 		    return "index";
 	}
@@ -105,7 +104,6 @@ public class ProdottoController {
 	public String AddProdotto(Model model) {
 	    //Recupera l'autenticazione
 	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
 	    if (authentication == null || !authentication.isAuthenticated()) {
 	        return "unauthorized";
 	    }
@@ -240,23 +238,6 @@ public class ProdottoController {
 
 	    return "redirect:/prodotto/" + prodottoSalvato.getId();
 	}
-//////////////////////////GESTIONE ELIMINTA PRODOTTO
-	@GetMapping("/admin/prodotto/delete/confirm/{id}")
-	public String confirmDeleteProdotto(@PathVariable("id") Long id) {
-
-	    // Controllo accesso: solo ADMIN può modificare prodotti
-	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	    String username = auth.getName();
-	    Credentials credentials = credentialsService.getCredentials(username);
-
-	    // Solo ADMIN può eliminare un prodotto
-	    if (credentials != null && Credentials.ADMIN_ROLE.equals(credentials.getRole())) {
-	        this.prodottoService.deleteById(id);
-	        return "redirect:/prodotti";
-	    }
-	    // NON autorizzato
-	    return "unauthorized";
-	}
 ////////////////////////////////GESTIONE PRODOTTI SIMILI
 	@GetMapping("/admin/prodotti/{id}/simili/candidati")
 	public String getCandidatiSimili(@PathVariable("id") Long prodottoId, Model model) {
@@ -313,6 +294,27 @@ public class ProdottoController {
 	    prodottoService.removeSimilar(id, simileId);
 	    return "redirect:/prodotto/" + id;
 	}
+	
+	//////////////////////////////GESTIONE ELIMINAZIONE PRODOTTO
+	@GetMapping("/admin/prodotto/delete/confirm/{id}")
+	public String confirmDeleteProdotto(@PathVariable("id") Long id, Model model) {
+
+	  
+	 // 1. Recupera l'autenticazione
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    // 2. Verifica che l'utente sia autenticato
+	    if (authentication == null || !authentication.isAuthenticated()) {
+	        return "unauthorized";
+	    }
+	    String username = authentication.getName();
+	    Credentials credentials = credentialsService.getCredentials(username);
+	    if (credentials == null || !credentials.getRole().equals("ADMIN")) {
+	        return "unauthorized";
+	    }
+	    this.prodottoService.deleteById(id);
+        return "redirect:/prodotti";
+	}
+
 
 
 
