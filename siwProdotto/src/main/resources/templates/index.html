@@ -3,31 +3,22 @@
   <head>
     <meta name="viewport" content="width=device-width">
     <meta charset="utf-8">
-    <title>AdoptMe</title>
+    <title>Tempus</title>
   
      <link rel="stylesheet" href="/css/stile.css"> 
   </head>
   
   <body class="index-page">
 
-	  <p sec:authorize="isAuthenticated()">
-    Utente autenticato: <span sec:authentication="principal.username">Nessun utente autenticato</span>
-</p>
-<p sec:authorize="isAuthenticated()">
-    Ruoli utente: <span sec:authentication="principal.authorities">Nessun ruolo trovato</span>
-</p>
-
-<p sec:authorize="isAnonymous()">
-    Nessun utente autenticato.
-</p>
 
 <header class="navbar">
   <div class="navbar-content">
+   
     <!-- Logo a sinistra -->
-    <div class="logo">
-        <a href="/">
-                <img src="/images/logo.png" alt="Logo">
-            </a>
+    <div class="logo-left">
+      <a href="/">
+        <img src="/images/logo.png" alt="Tempus" class="navbar-logo">
+      </a>
     </div>
 
     <!-- Sezione destra con Accedi e altro elemento -->

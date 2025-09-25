@@ -11,6 +11,14 @@ html, body {
   flex-direction: column;
 }
 /* ========== Layout principale verticale ========== */
+/* Logo a sinistra */
+.logo-left img.navbar-logo {
+  height: 100px !important;
+ margin-left: -10px;
+ 
+
+}
+
 
 
 .container{
@@ -28,13 +36,17 @@ html, body {
 
 .navbar-content {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: space-between; /* Spazio tra logo e pulsanti */
+  align-items: center;            /* Allineamento verticale */
+  padding: 0 30px;                /* Spazio ai lati */
+  height: 69px;                  /* sufficiente per il logo */
+  background-color: black;
+  margin-top: 5px; 
+ 
 }
 
-.logo img {
-  height: 50px;
-}
+
+
 
 .navbar-right {
   display: flex;
@@ -335,7 +347,7 @@ body.prodotto-detail-page {
   margin: 60px auto 30px auto;
   max-width: 900px;
   padding: 20px;
-  background-color: #e9f1fb;
+  background-color: rgb(178, 178, 178);
   border-radius: 20px;
 }
 
@@ -382,7 +394,7 @@ body.prodotto-detail-page {
   width: 100%;            /* occupa tutto lo spazio disponibile */
   max-width: none;        /* disattiva il limite a 900px */
   padding: 20px;
-  background-color: #e9f1fb;
+  background-color: rgb(233, 233, 233);
   border-radius: 0;       /* se vuoi senza bordi arrotondati ai lati */
 }
 
@@ -468,6 +480,9 @@ input[type="password"] {
   padding: 8px;
 }
 
+.grid-container h2 {
+	margin-left: 40px;
+}
 
 /***********login,register*************/
 .create-account h3 {
@@ -500,6 +515,17 @@ a.navbar-link {
 
 
 
+/* Logo a sinistra */
+.logo-left img.navbar-logo {
+  height: 80px;
+  margin-left: -30px;
+  margin-top: 15px;
+  width: auto;
+}
+
+.page-wrapper h2 {
+	margin-left: 40px;
+}
 
 /****** FOOTER PART ************/
 

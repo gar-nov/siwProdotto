@@ -10,12 +10,14 @@
 <body class="product-page">
 <header class="navbar">
   <div class="navbar-content">
+   
     <!-- Logo a sinistra -->
-    <div class="logo">
-        <a href="/">
-                <img src="/images/logo.png" alt="Logo">
-            </a>
+    <div class="logo-left">
+      <a href="/">
+        <img src="/images/logo.png" alt="Tempus" class="navbar-logo">
+      </a>
     </div>
+    
     <div class="navbar-right" sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
       <button class="navbar-link" onclick="window.location.href='/admin/prodotto/form'">Aggiungi prodotto
       </button>
